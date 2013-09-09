@@ -1,6 +1,6 @@
 # [GCalendar-DrEWE](https://github.com/carloscrespog/GCalendar-DrEWE)
 
-A Node.js module that simplifies the use of RESTful Google Calendar API without any interaction with the user, retrieve all events on a given calendar and send them to a GSN server
+A Node.js module that simplifies the use of RESTful Google Calendar API without any interaction with the user, retrieve all events on a given calendar and send them to a GSN server. Before send the events, it checks if it has already been added
 
 ## How to Install
 
@@ -23,6 +23,7 @@ Inside the config.js you can find six important parameters:
   - access_token : access token for your application,
   - refresh_token : refresh token for your application,
   - calendarId: your calendar's ID, it can be obtained from google calendar normal service
+  - refresh_time: time in milliseconds to check for new events
 
 Despite there are several methods to retrieve the token, I hardly encourage to go to [Google Oauth Playground](https://developers.google.com/oauthplayground/) and configure it to "Use your own OAuth credentials"
 

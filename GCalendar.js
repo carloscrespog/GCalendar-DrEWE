@@ -5,14 +5,37 @@ var OAuth2Client = googleapis.OAuth2Client;
 var http = require('http');
 var querystring = require('querystring');
 var async=require('async');
+var startDates= new Array();
 
 function calendarToGSN(err,data){
-	
+
 	var items=data.items;
 
 	async.eachSeries(items,function(item,callback){
-		var xml=createXML(item);
-		putToGSN(xml,callback);
+		var repeated=false;
+		if(startDates.length===0){
+			startDates.push(item.start.dateTime);
+			var xml=createXML(item);
+			putToGSN(xml,callback);
+
+		}else{
+			for (var i in startDates){
+				if(startDates[i]==item.start.dateTime){
+					repeated=true;
+					
+				}
+
+			}
+			if(!repeated){
+				startDates.push(item.start.dateTime);
+				var xml=createXML(item);
+				putToGSN(xml,callback);
+			}else{
+				console.log('item already in list');
+				callback();
+			}
+		}
+
 	},function(err){
 
 	});
@@ -67,7 +90,7 @@ function putToGSN(xmlData,callback){
 	
 	var req = http.request(options, function(res) {
 		console.log('STATUS: ' + res.statusCode);
-		
+		console.log('Item sent to GSN');
 		res.setEncoding('utf8');
 		
 	});
@@ -79,12 +102,14 @@ function putToGSN(xmlData,callback){
 		socket.setTimeout(2000);  
 		socket.on('timeout', function() {
 			req.abort();
+			console.log('callback reached');
 			callback();
 		});
 	});
 	
 	req.write(data);
 	req.end();
+	setTimeout(callback,3000);
 
 	
 	
@@ -109,7 +134,7 @@ function getEvents(){
 		console.log('events retrieved');
 	});
 }
- getEvents();
-setInterval(getEvents,300000);
+getEvents();
+setInterval(getEvents,config.refresh_time);
 
 
