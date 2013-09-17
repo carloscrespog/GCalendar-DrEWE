@@ -1,6 +1,8 @@
 # [GCalendar-DrEWE](https://github.com/carloscrespog/GCalendar-DrEWE)
 
-A Node.js module that simplifies the use of RESTful Google Calendar API without any interaction with the user, retrieve all events on a given calendar and send them to a GSN server. Before send the events, it checks if it has already been added
+A Node.js module that simplifies the use of RESTful Google Calendar API without any interaction with the user, retrieve all events on a given calendar and send them to a GSN server. Before sending the events, it checks if it has already been added
+
+![GCalendar](https://dl.dropboxusercontent.com/u/25002167/EWE%20repo/DrEWE%20full%20-%20GCalendar.png)
 
 ## How to Install
 
